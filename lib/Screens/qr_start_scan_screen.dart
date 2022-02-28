@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_reader/Screens/qr_scan_screen.dart';
+import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
+import 'package:qr_code_reader/Widgets/custom_button.dart';
 
 class QRStartScanPage extends StatelessWidget {
   const QRStartScanPage({Key? key}) : super(key: key);
@@ -48,17 +51,16 @@ class QRStartScanPortrait extends StatelessWidget {
           size: 250,
           color: Theme.of(context).iconTheme.color!.withOpacity(0.5),
         ),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            primary: Colors.greenAccent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-          ),
+        CustomButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              RightSlideTransition(
+                page: const QRScanPage(),
+              ),
+            );
+          },
           child: const Text('Start Scan'),
-        )
+        ),
       ],
     );
   }
@@ -90,15 +92,14 @@ class QRStartScanLandScape extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                primary: Colors.greenAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-              ),
+            CustomButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  RightSlideTransition(
+                    page: const QRScanPage(),
+                  ),
+                );
+              },
               child: const Text('Start Scan'),
             ),
           ],

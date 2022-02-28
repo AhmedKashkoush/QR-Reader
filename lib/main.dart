@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_code_reader/Utils/Routes/themes.dart';
+import 'package:qr_code_reader/Utils/themes.dart';
 
 import 'Screens/home_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   const SystemUiOverlayStyle _overlay = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.transparent,

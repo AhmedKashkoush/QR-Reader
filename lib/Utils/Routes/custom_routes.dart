@@ -22,3 +22,49 @@ class BottomSlideTransition extends PageRouteBuilder {
           pageBuilder: (context, a, _) => page,
         );
 }
+
+class RightSlideTransition extends PageRouteBuilder {
+  final Widget page;
+  RightSlideTransition({required this.page})
+      : super(
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionsBuilder: (context, animation, secondaryAnimation, page) {
+      Animation<Offset> _slideAnimation =
+      Tween(begin: const Offset(1, 0), end: Offset.zero).animate(
+        CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+      );
+      // Animation<double> _fadeAnimation =
+      // Tween(begin: 0.0, end: 1.0).animate(
+      // CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+      // );
+      return SlideTransition(
+        position: _slideAnimation,
+        child: page,
+      );
+    },
+    pageBuilder: (context, a, _) => page,
+  );
+}
+
+class LeftSlideTransition extends PageRouteBuilder {
+  final Widget page;
+  LeftSlideTransition({required this.page})
+      : super(
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionsBuilder: (context, animation, secondaryAnimation, page) {
+      Animation<Offset> _slideAnimation =
+      Tween(begin: const Offset(-1, 0), end: Offset.zero).animate(
+        CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+      );
+      // Animation<double> _fadeAnimation =
+      // Tween(begin: 0.0, end: 1.0).animate(
+      // CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+      // );
+      return SlideTransition(
+        position: _slideAnimation,
+        child: page,
+      );
+    },
+    pageBuilder: (context, a, _) => page,
+  );
+}

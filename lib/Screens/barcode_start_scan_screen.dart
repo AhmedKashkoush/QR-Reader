@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qr_code_reader/Widgets/custom_button.dart';
 
 class BarcodeStartScanPage extends StatelessWidget {
   const BarcodeStartScanPage({Key? key}) : super(key: key);
@@ -51,17 +52,10 @@ class BarcodeStartScanPortrait extends StatelessWidget {
             color: Theme.of(context).iconTheme.color!.withOpacity(0.5),
           ),
         ),
-        ElevatedButton(
+        CustomButton(
           onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            primary: Colors.greenAccent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-          ),
           child: const Text('Start Scan'),
-        )
+        ),
       ],
     );
   }
@@ -93,15 +87,8 @@ class BarcodeStartScanLandScape extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            ElevatedButton(
+            CustomButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                primary: Colors.greenAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-              ),
               child: const Text('Start Scan'),
             ),
           ],
