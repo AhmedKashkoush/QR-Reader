@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_reader/Screens/qr_scan_screen.dart';
+import 'package:qr_code_reader/Screens/scan_screen.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/custom_button.dart';
 
@@ -15,15 +15,16 @@ class QRStartScanPage extends StatelessWidget {
         foregroundColor: Theme.of(context).iconTheme.color,
       ),
       body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: OrientationBuilder(
-            builder: (context, orientation) {
-              if (orientation == Orientation.landscape) {
-                return const QRStartScanLandScape();
-              }
-              return const QRStartScanPortrait();
-            },
-          )),
+        padding: const EdgeInsets.all(12.0),
+        child: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.landscape) {
+              return const QRStartScanLandScape();
+            }
+            return const QRStartScanPortrait();
+          },
+        ),
+      ),
     );
   }
 }
@@ -55,7 +56,9 @@ class QRStartScanPortrait extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               RightSlideTransition(
-                page: const QRScanPage(),
+                page: ScanPage(
+                  scanMode: 'qrcode',
+                ),
               ),
             );
           },
@@ -96,7 +99,9 @@ class QRStartScanLandScape extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   RightSlideTransition(
-                    page: const QRScanPage(),
+                    page: ScanPage(
+                      scanMode: 'qrcode',
+                    ),
                   ),
                 );
               },

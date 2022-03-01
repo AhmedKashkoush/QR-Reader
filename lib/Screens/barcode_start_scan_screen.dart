@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qr_code_reader/Screens/scan_screen.dart';
+import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/custom_button.dart';
 
 class BarcodeStartScanPage extends StatelessWidget {
@@ -14,15 +16,16 @@ class BarcodeStartScanPage extends StatelessWidget {
         foregroundColor: Theme.of(context).iconTheme.color,
       ),
       body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: OrientationBuilder(
-            builder: (context, orientation) {
-              if (orientation == Orientation.landscape) {
-                return const BarcodeStartScanLandScape();
-              }
-              return const BarcodeStartScanPortrait();
-            },
-          )),
+        padding: const EdgeInsets.all(12.0),
+        child: OrientationBuilder(
+          builder: (context, orientation) {
+            if (orientation == Orientation.landscape) {
+              return const BarcodeStartScanLandScape();
+            }
+            return const BarcodeStartScanPortrait();
+          },
+        ),
+      ),
     );
   }
 }
@@ -53,8 +56,16 @@ class BarcodeStartScanPortrait extends StatelessWidget {
           ),
         ),
         CustomButton(
-          onPressed: () {},
-          child: const Text('Start Scan'),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              RightSlideTransition(
+                page: ScanPage(
+                  scanMode: 'barcode',
+                ),
+              ),
+            );
+          },
+          child: const Text('Start Scanning'),
         ),
       ],
     );
@@ -88,8 +99,16 @@ class BarcodeStartScanLandScape extends StatelessWidget {
               ),
             ),
             CustomButton(
-              onPressed: () {},
-              child: const Text('Start Scan'),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  RightSlideTransition(
+                    page: ScanPage(
+                      scanMode: 'barcode',
+                    ),
+                  ),
+                );
+              },
+              child: const Text('Start Scanning'),
             ),
           ],
         )

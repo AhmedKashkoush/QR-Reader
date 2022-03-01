@@ -1,21 +1,20 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_code_reader/Screens/home_screen.dart';
 import 'package:qr_code_reader/Screens/scan_result_screen.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QRScanPage extends StatefulWidget {
-  const QRScanPage({Key? key}) : super(key: key);
+class ScanPage extends StatefulWidget {
+  final String scanMode;
+  const ScanPage({Key? key, required this.scanMode}) : super(key: key);
 
   @override
-  _QRScanPageState createState() => _QRScanPageState();
+  _ScanPageState createState() => _ScanPageState();
 }
 
-class _QRScanPageState extends State<QRScanPage> {
+class _ScanPageState extends State<ScanPage> {
   final _portraitMode = [
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -50,7 +49,7 @@ class _QRScanPageState extends State<QRScanPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         if (!_canPop) _canPop = true;
         return _canPop;
       },
@@ -81,7 +80,24 @@ class _QRScanPageState extends State<QRScanPage> {
                     color: Colors.white,
                   ),
                 ),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Text(
+                      'Scan Mode: ${widget.scanMode.toUpperCase()}',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -94,14 +110,19 @@ class _QRScanPageState extends State<QRScanPage> {
     this.controller!.scannedDataStream.listen(_listener);
   }
 
-  void _listener(Barcode data){
-    if (!_canPop  && mounted) {
+  void _listener(Barcode data) {
+    if (!_canPop && mounted) {
       this._result = data;
-      if (this._result != null && this._result!.format.name == 'qrcode') {
+      if (this._result != null &&
+              (this._result!.format.name == widget.scanMode &&
+                  widget.scanMode == 'qrcode') ||
+          (this._result!.format.name.substring(0, 4) == 'code' &&
+              widget.scanMode == 'barcode')) {
         _canPop = true;
         Navigator.of(context).pushReplacement(
           RightSlideTransition(
-            page: ScanResultPage(data: this._result!, scanMode: 'QR'),
+            page:
+                ScanResultPage(data: this._result!, scanMode: widget.scanMode),
           ),
         );
       }

@@ -1,5 +1,7 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_reader/Screens/qr_scan_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:qr_code_reader/Screens/scan_screen.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/custom_button.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -78,7 +80,12 @@ class ScanResultPage extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await FlutterClipboard.copy(_result);
+                      Fluttertoast.showToast(
+                          msg: 'Copied to Clipboard',
+                          gravity: ToastGravity.BOTTOM);
+                    },
                     icon: Icon(
                       Icons.copy,
                       color: Colors.grey.shade500,
@@ -90,7 +97,9 @@ class ScanResultPage extends StatelessWidget {
             CustomButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                  LeftSlideTransition(page: const QRScanPage()),
+                  LeftSlideTransition(
+                    page: ScanPage(scanMode: scanMode,),
+                  ),
                 );
               },
               child: const Text('Scan Again'),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_code_reader/Screens/generate_qr_screen.dart';
 import 'package:qr_code_reader/Screens/qr_start_scan_screen.dart';
+import 'package:qr_code_reader/Screens/settings_screen.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/code_card.dart';
 
@@ -56,9 +57,22 @@ class HomePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              onSelected: (String value) {
+                final _index = _menuItems.indexOf(value);
+                switch (_index) {
+                  case 0:
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
+                      ),
+                    );
+                    break;
+                }
+              },
               itemBuilder: (context) => _menuItems
                   .map(
                     (e) => PopupMenuItem(
+                      value: e,
                       child: Text(e),
                     ),
                   )
