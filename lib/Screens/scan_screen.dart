@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_reader/Screens/scan_result_screen.dart';
+import 'package:qr_code_reader/Utils/AppSettings/Language/locales.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
+import 'package:qr_code_reader/Widgets/custom_aligned_container.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanPage extends StatefulWidget {
@@ -30,9 +33,12 @@ class _ScanPageState extends State<ScanPage> {
   Barcode? _result;
   bool _canPop = false;
 
+  bool? isFlashOn;
+
   @override
   void initState() {
     SystemChrome.setPreferredOrientations(_portraitMode);
+    getFlashStatus();
     super.initState();
   }
 
@@ -83,18 +89,40 @@ class _ScanPageState extends State<ScanPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: Align(
+                child: CustomAlignedContainer(
                   alignment: Alignment.bottomCenter,
-                  child: Container(
-                    padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.4),
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Text(
-                      'Scan Mode: ${widget.scanMode.toUpperCase()}',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                  padding: 14,
+                  opacity: 0.4,
+                  borderRadius: 24,
+                  child: Text(
+                    '${AppLocales.languageTranslation!["scan mode"]!}: ${widget.scanMode.toUpperCase()}', //Scan Mode
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(80.0),
+                child: CustomAlignedContainer(
+                  alignment: Alignment.topCenter,
+                  padding: 5,
+                  opacity: 0.2,
+                  borderRadius: 24,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          await controller!.flipCamera();
+                        },
+                        icon: Icon(Icons.adaptive.flip_camera),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          await controller!.toggleFlash();
+                        },
+                        icon: Icon(Icons.flash_on_rounded),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -134,5 +162,9 @@ class _ScanPageState extends State<ScanPage> {
     this.controller!.dispose();
     SystemChrome.setPreferredOrientations(_allModes);
     super.dispose();
+  }
+
+  Future<void> getFlashStatus() async {
+    isFlashOn = await controller!.getFlashStatus();
   }
 }

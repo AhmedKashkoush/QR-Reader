@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_code_reader/Screens/scan_screen.dart';
+import 'package:qr_code_reader/Utils/AppSettings/Language/locales.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/custom_button.dart';
 
@@ -39,9 +40,9 @@ class BarcodeStartScanPortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Center(
+        Center(
           child: Text(
-            'Move Your Camera Into The Barcode To Scan',
+            '${AppLocales.languageTranslation!["move your camera into the barcode to scan"]!}', //Move Your Camera Into The Barcode To Scan
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -65,7 +66,8 @@ class BarcodeStartScanPortrait extends StatelessWidget {
               ),
             );
           },
-          child: const Text('Start Scanning'),
+          child: Text(
+              '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
         ),
       ],
     );
@@ -91,8 +93,8 @@ class BarcodeStartScanLandScape extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 80,
           children: [
-            const Text(
-              'Move Your Camera Into The Barcode To Scan',
+            Text(
+              '${AppLocales.languageTranslation!["move your camera into the barcode to scan"]!}', //Move Your Camera Into The Barcode To Scan
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -108,7 +110,8 @@ class BarcodeStartScanLandScape extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text('Start Scanning'),
+              child: Text(
+                  '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
             ),
           ],
         )

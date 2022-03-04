@@ -41,7 +41,6 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       color: Colors.teal.shade800,
     ),
-
     colorScheme: ColorScheme.fromSwatch(
       accentColor: Colors.teal,
       primarySwatch: Colors.teal,
@@ -53,12 +52,18 @@ class AppTheme {
     brightness: Brightness.dark,
   );
 
-  static void loadThemeMode(){
-    final String? _themeMode = SharedPreferencesApi.getString('Theme')?? 'system';
-    switch (_themeMode){
-      case 'light': themeMode = ThemeMode.light;break;
-      case 'dark': themeMode = ThemeMode.dark;break;
-      default: themeMode = ThemeMode.system;
+  static void loadThemeMode() {
+    final String? _themeMode =
+        SharedPreferencesApi.getString('Theme') ?? 'system';
+    switch (_themeMode) {
+      case 'light':
+        themeMode = ThemeMode.light;
+        break;
+      case 'dark':
+        themeMode = ThemeMode.dark;
+        break;
+      default:
+        themeMode = ThemeMode.system;
     }
   }
 }

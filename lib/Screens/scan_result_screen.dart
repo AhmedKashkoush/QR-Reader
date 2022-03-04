@@ -2,6 +2,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_code_reader/Screens/scan_screen.dart';
+import 'package:qr_code_reader/Utils/AppSettings/Language/locales.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/custom_button.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -29,7 +30,7 @@ class ScanResultPage extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                'Scan Result',
+                '${AppLocales.languageTranslation!["scan result"]!}', //Scan Result
                 style: TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
@@ -83,7 +84,8 @@ class ScanResultPage extends StatelessWidget {
                     onPressed: () async {
                       await FlutterClipboard.copy(_result);
                       Fluttertoast.showToast(
-                          msg: 'Copied to Clipboard',
+                          msg:
+                              '${AppLocales.languageTranslation!["copied to clipboard"]!}', //Copied To Clipboard
                           gravity: ToastGravity.BOTTOM);
                     },
                     icon: Icon(
@@ -98,11 +100,14 @@ class ScanResultPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   LeftSlideTransition(
-                    page: ScanPage(scanMode: scanMode,),
+                    page: ScanPage(
+                      scanMode: scanMode,
+                    ),
                   ),
                 );
               },
-              child: const Text('Scan Again'),
+              child: Text(
+                  '${AppLocales.languageTranslation!["scan again"]!}'), //Scan Again
             ),
           ],
         ),

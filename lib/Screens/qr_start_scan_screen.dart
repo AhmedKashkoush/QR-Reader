@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_reader/Screens/scan_screen.dart';
+import 'package:qr_code_reader/Utils/AppSettings/Language/locales.dart';
 import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/custom_button.dart';
 
@@ -38,9 +39,9 @@ class QRStartScanPortrait extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Center(
+        Center(
           child: Text(
-            'Move Your Camera Into The QR Code To Scan',
+            '${AppLocales.languageTranslation!["move your camera into the qr code to scan"]!}', //'Move Your Camera Into The QR Code To Scan'
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -62,7 +63,8 @@ class QRStartScanPortrait extends StatelessWidget {
               ),
             );
           },
-          child: const Text('Start Scan'),
+          child: Text(
+              '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
         ),
       ],
     );
@@ -88,8 +90,8 @@ class QRStartScanLandScape extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 80,
           children: [
-            const Text(
-              'Move Your Camera Into The QR Code To Scan',
+            Text(
+              '${AppLocales.languageTranslation!["move your camera into the qr code to scan"]!}', //'Move Your Camera Into The QR Code To Scan'
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -105,7 +107,8 @@ class QRStartScanLandScape extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text('Start Scan'),
+              child: Text(
+                  '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
             ),
           ],
         )
