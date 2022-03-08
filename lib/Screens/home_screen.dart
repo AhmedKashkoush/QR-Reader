@@ -10,6 +10,7 @@ import 'package:qr_code_reader/Utils/Routes/custom_routes.dart';
 import 'package:qr_code_reader/Widgets/code_card.dart';
 
 import 'barcode_start_scan_screen.dart';
+import 'generate_barcode_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
         size: 90,
       ),
       "text": 'Generate Barcode', //Generate Barcode
-      "screen": QRStartScanPage(),
+      "screen": GenerateBarcodePage(),
     },
     {
       "icon": FaIcon(
@@ -80,7 +81,8 @@ class HomePage extends StatelessWidget {
                     (e) => PopupMenuItem(
                       value: e,
                       child: Text(
-                          '${AppLocales.languageTranslation![e.toLowerCase()]!}'),
+                        '${AppLocales.languageTranslation![e.toLowerCase()]!}',
+                      ),
                     ),
                   )
                   .toList())
@@ -107,11 +109,6 @@ class HomePage extends StatelessWidget {
   }
 
   void _navigateTo(Widget screen, BuildContext context) {
-    // Future.delayed(const Duration(milliseconds: 150), () {
-    //   Navigator.of(context).push(
-    //     BottomSlideTransition(page: screen),
-    //   );
-    // });
     Navigator.of(context).push(
       BottomSlideTransition(page: screen),
     );

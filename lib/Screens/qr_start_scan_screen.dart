@@ -64,7 +64,8 @@ class QRStartScanPortrait extends StatelessWidget {
             );
           },
           child: Text(
-              '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
+            '${AppLocales.languageTranslation!["start scanning"]!}', //Start Scanning
+          ),
         ),
       ],
     );
@@ -108,7 +109,8 @@ class QRStartScanLandScape extends StatelessWidget {
                 );
               },
               child: Text(
-                  '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
+                '${AppLocales.languageTranslation!["start scanning"]!}', //Start Scanning
+              ),
             ),
           ],
         )

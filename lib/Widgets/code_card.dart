@@ -37,16 +37,14 @@ class CodeCard extends StatelessWidget {
             children: [
               icon,
               Center(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .color!
-                        .withOpacity(0.3),
+                child: Opacity(
+                  opacity: 0.3,
+                  child: Text(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               )

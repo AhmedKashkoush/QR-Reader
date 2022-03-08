@@ -67,7 +67,8 @@ class BarcodeStartScanPortrait extends StatelessWidget {
             );
           },
           child: Text(
-              '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
+            '${AppLocales.languageTranslation!["start scanning"]!}', //Start Scanning
+          ),
         ),
       ],
     );
@@ -111,7 +112,8 @@ class BarcodeStartScanLandScape extends StatelessWidget {
                 );
               },
               child: Text(
-                  '${AppLocales.languageTranslation!["start scanning"]!}'), //Start Scanning
+                '${AppLocales.languageTranslation!["start scanning"]!}', //Start Scanning
+              ),
             ),
           ],
         )

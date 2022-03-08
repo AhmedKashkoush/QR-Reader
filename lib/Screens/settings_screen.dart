@@ -17,30 +17,31 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final List<String> _fonts = ['System', 'Arial', 'Times New Roman'];
+  final List<String> _sizes = [
+    'small',
+    'medium',
+    'large'
+  ]; //Small, Medium, Large
+  String? _selectedFont = 'System';
+  double _fontSize = 0.5;
+  int _fontSizeIndex = 0;
   @override
   Widget build(BuildContext context) {
-    String _dev = Platform.localeName.substring(0, 2);
-    //_lang = Localizations.localeOf(context).languageCode;
-    //String _lang = 'system';
     final _theme = Provider.of<ThemeProvider>(context);
     final _lang = Provider.of<LocaleProvider>(context);
-    const List<String> _fonts = ['System', 'Arial', 'Times New Roman'];
-    const List<String> _sizes = [
-      'Small',
-      'Medium',
-      'Large'
-    ]; //Small, Medium, Large
-    String? _selectedFont = 'System';
-    double _valueIndex = 0.5;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppLocales.languageTranslation!["settings"]!}'),
+        title: Text(
+          '${AppLocales.languageTranslation!["settings"]!}', //Settings
+        ),
       ),
       body: ListView(
         children: [
           ExpansionTile(
-            title:
-                Text('${AppLocales.languageTranslation!["themes"]!}'), //Themes
+            title: Text(
+              '${AppLocales.languageTranslation!["themes"]!}', //Themes
+            ),
             leading: Icon(Icons.brightness_4_outlined),
             subtitle: Text(
               '${AppLocales.languageTranslation![AppTheme.themeMode.name.toLowerCase()]!}',
@@ -84,7 +85,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             leading: Icon(Icons.translate),
             subtitle: Text(
-                '${AppLocales.languageTranslation![AppLocales.languageMode.toLowerCase()]!}'),
+              '${AppLocales.languageTranslation![AppLocales.languageMode.toLowerCase()]!}',
+            ),
             children: [
               RadioListTile(
                 title: Text(
@@ -121,7 +123,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ExpansionTile(
             expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-            title: Text('${AppLocales.languageTranslation!["font"]!}'), //Font
+            title: Text(
+              '${AppLocales.languageTranslation!["font"]!}', //Font
+            ),
             leading: FaIcon(
               FontAwesomeIcons.font,
               size: 18,
@@ -129,7 +133,8 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               ListTile(
                 title: Text(
-                    '${AppLocales.languageTranslation!["font family"]!}'), //Font Family
+                  '${AppLocales.languageTranslation!["font family"]!}', //Font Family
+                ),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: DropdownButton<String>(
@@ -153,15 +158,25 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               ListTile(
                 title: Text(
-                    '${AppLocales.languageTranslation!["font size"]!}'), //Font Size
+                  '${AppLocales.languageTranslation!["font size"]!}', //Font Size
+                ),
+                subtitle: Text(
+                  '${AppLocales.languageTranslation![_sizes[_fontSizeIndex]]!}', //Small , Medium , Large
+                ),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.65,
                   child: Slider.adaptive(
-                    value: _valueIndex,
-                    label: _sizes[_valueIndex.toInt()],
+                    value: _fontSize,
+                    label:
+                        '${AppLocales.languageTranslation![_sizes[_fontSizeIndex]]!}',
                     onChanged: (double value) {
                       setState(() {
-                        _valueIndex = value;
+                        _fontSize = value;
+                        _fontSizeIndex = _fontSize == 0.5
+                            ? 0
+                            : _fontSize == 1
+                                ? 1
+                                : 2;
                       });
                     },
                     divisions: 2,

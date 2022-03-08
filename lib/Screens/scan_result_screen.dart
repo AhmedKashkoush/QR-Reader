@@ -29,16 +29,14 @@ class ScanResultPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
-              child: Text(
-                '${AppLocales.languageTranslation!["scan result"]!}', //Scan Result
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .color!
-                      .withOpacity(0.6),
+              child: Opacity(
+                opacity: 0.6,
+                child: Text(
+                  '${AppLocales.languageTranslation!["scan result"]!}', //Scan Result
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -66,7 +64,7 @@ class ScanResultPage extends StatelessWidget {
                             color: _result.contains('http') ||
                                     _result.contains('https')
                                 ? Colors.blue
-                                : Theme.of(context).textTheme.bodyText1!.color,
+                                : null,
                             decoration: _result.contains('http') ||
                                     _result.contains('https')
                                 ? TextDecoration.underline
@@ -84,9 +82,10 @@ class ScanResultPage extends StatelessWidget {
                     onPressed: () async {
                       await FlutterClipboard.copy(_result);
                       Fluttertoast.showToast(
-                          msg:
-                              '${AppLocales.languageTranslation!["copied to clipboard"]!}', //Copied To Clipboard
-                          gravity: ToastGravity.BOTTOM);
+                        msg:
+                            '${AppLocales.languageTranslation!["copied to clipboard"]!}', //Copied To Clipboard
+                        gravity: ToastGravity.BOTTOM,
+                      );
                     },
                     icon: Icon(
                       Icons.copy,
@@ -107,7 +106,8 @@ class ScanResultPage extends StatelessWidget {
                 );
               },
               child: Text(
-                  '${AppLocales.languageTranslation!["scan again"]!}'), //Scan Again
+                '${AppLocales.languageTranslation!["scan again"]!}',
+              ), //Scan Again
             ),
           ],
         ),

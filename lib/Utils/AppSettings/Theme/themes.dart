@@ -8,11 +8,6 @@ class AppTheme {
     primaryColor: Colors.blueGrey,
     scaffoldBackgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.black),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.black,
-      ),
-    ),
     toggleableActiveColor: Colors.blueGrey,
     appBarTheme: AppBarTheme(
       color: Colors.blueGrey,
@@ -33,11 +28,6 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.grey.shade900,
     toggleableActiveColor: Colors.teal.shade800,
     iconTheme: const IconThemeData(color: Colors.white),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.white,
-      ),
-    ),
     appBarTheme: AppBarTheme(
       color: Colors.teal.shade800,
     ),

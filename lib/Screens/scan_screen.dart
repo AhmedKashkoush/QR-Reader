@@ -33,12 +33,11 @@ class _ScanPageState extends State<ScanPage> {
   Barcode? _result;
   bool _canPop = false;
 
-  bool? isFlashOn;
+  bool? isFlashOn = false;
 
   @override
   void initState() {
     SystemChrome.setPreferredOrientations(_portraitMode);
-    getFlashStatus();
     super.initState();
   }
 
@@ -114,13 +113,24 @@ class _ScanPageState extends State<ScanPage> {
                         onPressed: () async {
                           await controller!.flipCamera();
                         },
-                        icon: Icon(Icons.adaptive.flip_camera),
+                        icon: Icon(
+                          Icons.adaptive.flip_camera,
+                          color: Colors.white,
+                        ),
                       ),
                       IconButton(
                         onPressed: () async {
                           await controller!.toggleFlash();
+                          setState(() {
+                            this.isFlashOn = !this.isFlashOn!;
+                          });
                         },
-                        icon: Icon(Icons.flash_on_rounded),
+                        icon: Icon(
+                          isFlashOn!
+                              ? Icons.flash_off_rounded
+                              : Icons.flash_on_rounded,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -133,8 +143,9 @@ class _ScanPageState extends State<ScanPage> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller) async {
     this.controller = controller;
+    await getFlashStatus();
     this.controller!.scannedDataStream.listen(_listener);
   }
 
@@ -165,6 +176,6 @@ class _ScanPageState extends State<ScanPage> {
   }
 
   Future<void> getFlashStatus() async {
-    isFlashOn = await controller!.getFlashStatus();
+    this.isFlashOn = await controller!.getFlashStatus();
   }
 }

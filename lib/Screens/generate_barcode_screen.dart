@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_reader/Utils/AppSettings/Language/locale_provider.dart';
@@ -16,16 +17,40 @@ import 'package:share_plus/share_plus.dart';
 
 import '../Utils/Files/file_api.dart';
 
-class GenerateQRPage extends StatefulWidget {
-  const GenerateQRPage({Key? key}) : super(key: key);
+class GenerateBarcodePage extends StatefulWidget {
+  const GenerateBarcodePage({Key? key}) : super(key: key);
 
   @override
-  State<GenerateQRPage> createState() => _GenerateQRPageState();
+  State<GenerateBarcodePage> createState() => _GenerateBarcodePageState();
 }
 
-class _GenerateQRPageState extends State<GenerateQRPage> {
+class _GenerateBarcodePageState extends State<GenerateBarcodePage> {
   final TextEditingController _controller = TextEditingController();
-  final GlobalKey _qrBoundaryKey = GlobalKey();
+  final GlobalKey _barcodeBoundaryKey = GlobalKey();
+  final List<String> _barcodes = [
+    'Code 39',
+    'Code 93',
+    'Code 128 A',
+    'Code 128 B',
+    'Code 128 C',
+    'GSI-128',
+    'ITF',
+    'ITF-14',
+    'ITF-16',
+    'EAN 13',
+    'EAN 8',
+    'EAN 2',
+    'EAN 5',
+    'ISBN',
+    'UPC-A',
+    'UPC-E',
+    'Telepen',
+    'Codabar',
+    'RM4SCC',
+  ];
+
+  int _selectedChip = 0;
+
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -45,7 +70,7 @@ class _GenerateQRPageState extends State<GenerateQRPage> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              '${AppLocales.languageTranslation!["qr generator"]!}', //QR Generator
+              '${AppLocales.languageTranslation!["barcode generator"]!}', //Barcode Generator
             ),
             leading: BackButton(
               onPressed: () async {
@@ -66,41 +91,83 @@ class _GenerateQRPageState extends State<GenerateQRPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(
-                    height: _height * 0.2,
+                    height: _height * 0.12,
                   ),
-                  _controller.text.isEmpty
-                      ? Icon(
-                          Icons.qr_code_2_outlined,
-                          size: 240,
-                          color: Theme.of(context)
-                              .iconTheme
-                              .color!
-                              .withOpacity(0.3),
-                        )
-                      : Center(
-                          child: RepaintBoundary(
-                            key: _qrBoundaryKey,
-                            child: QrImage(
-                              data: _controller.text,
-                              version: QrVersions.auto,
-                              size: 205,
-                              gapless: false,
-                              padding: const EdgeInsets.all(8),
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.black,
-                              errorStateBuilder: (cxt, err) {
-                                return Container(
-                                  child: Center(
-                                    child: Text(
-                                      '${AppLocales.languageTranslation!["something went wrong"]!}', //Something went wrong
-                                      textAlign: TextAlign.center,
+                  // _controller.text.isEmpty
+                  //     ?
+                  Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.barcode,
+                      size: 220,
+                      color:
+                          Theme.of(context).iconTheme.color!.withOpacity(0.3),
+                    ),
+                  ),
+                  // : Center(
+                  //     child: RepaintBoundary(
+                  //       key: _qrBoundaryKey,
+                  //       child: QrImage(
+                  //         data: _controller.text,
+                  //         version: QrVersions.auto,
+                  //         size: 205,
+                  //         gapless: false,
+                  //         padding: const EdgeInsets.all(8),
+                  //         backgroundColor: Colors.white,
+                  //         foregroundColor: Colors.black,
+                  //         errorStateBuilder: (cxt, err) {
+                  //           return Container(
+                  //             child: Center(
+                  //               child: Text(
+                  //                 '${AppLocales.languageTranslation!["something went wrong"]!}', //Something went wrong
+                  //                 textAlign: TextAlign.center,
+                  //               ),
+                  //             ),
+                  //           );
+                  //         },
+                  //       ),
+                  //     ),
+                  //   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: 40,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Wrap(
+                        children: _barcodes
+                            .map(
+                              (itemName) => Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                color: Colors.transparent,
+                                child: ChoiceChip(
+                                  label: Text(
+                                    itemName,
+                                    style: TextStyle(
+                                      color: _selectedChip ==
+                                              _barcodes.indexOf(itemName)
+                                          ? Colors.white
+                                          : null,
                                     ),
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                                  selectedColor: Colors.blue.shade800,
+                                  selected: _selectedChip ==
+                                      _barcodes.indexOf(itemName),
+                                  padding: const EdgeInsets.all(8),
+                                  onSelected: (isSelected) {
+                                    setState(() {
+                                      _selectedChip =
+                                          _barcodes.indexOf(itemName);
+                                    });
+                                  },
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 40,
                   ),
@@ -147,16 +214,16 @@ class _GenerateQRPageState extends State<GenerateQRPage> {
                     onPressed: _controller.text == ''
                         ? null
                         : () async {
-                            _showSaveLoadingDialog();
-                            final String path = await FileApi.saveQRImage(
-                                fileName: _controller.text,
-                                boundaryKey: _qrBoundaryKey);
-                            Navigator.pop(context);
-                            Fluttertoast.showToast(
-                              msg:
-                                  '${AppLocales.languageTranslation!["saved to"]!}: $path', //Copied To Clipboard
-                              gravity: ToastGravity.BOTTOM,
-                            );
+                            // _showSaveLoadingDialog();
+                            // final String path = await FileApi.saveQRImage(
+                            //     fileName: _controller.text,
+                            //     boundaryKey: _qrBoundaryKey);
+                            // Navigator.pop(context);
+                            // Fluttertoast.showToast(
+                            //   msg:
+                            //   '${AppLocales.languageTranslation!["saved to"]!}: $path', //Copied To Clipboard
+                            //   gravity: ToastGravity.BOTTOM,
+                            // );
                           },
                     child: Text(
                       '${AppLocales.languageTranslation!["save"]!}',
@@ -170,14 +237,14 @@ class _GenerateQRPageState extends State<GenerateQRPage> {
                     onPressed: _controller.text == ''
                         ? null
                         : () async {
-                            _showLoadingDialog();
-                            final String path = await FileApi.saveQRImage(
-                                fileName: _controller.text,
-                                boundaryKey: _qrBoundaryKey);
-                            Navigator.pop(context);
-                            await Share.shareFiles(
-                              [path],
-                            );
+                            // _showLoadingDialog();
+                            // final String path = await FileApi.saveQRImage(
+                            //     fileName: _controller.text,
+                            //     boundaryKey: _qrBoundaryKey);
+                            // Navigator.pop(context);
+                            // await Share.shareFiles(
+                            //   [path],
+                            // );
                           },
                     child: Text(
                       '${AppLocales.languageTranslation!["share"]!}', //Share

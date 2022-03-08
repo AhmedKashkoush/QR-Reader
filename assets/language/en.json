@@ -31,5 +31,9 @@
   "small": "Small",
   "medium": "Medium",
   "large": "Large",
-  "font size": "Font Size"
+  "font size": "Font Size",
+  "saving": "Saving",
+  "saved to": "Saved To",
+  "share": "Share",
+  "barcode generator": "Barcode Generator"
 }

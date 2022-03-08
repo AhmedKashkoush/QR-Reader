@@ -31,5 +31,9 @@
   "small": "صغير",
   "medium": "متوسط",
   "large": "كبير",
-  "font size": "حجم الخط"
+  "font size": "حجم الخط",
+  "saving": "يتم الحفظ",
+  "saved to": "حفظ في",
+  "share": "مشاركة",
+  "barcode generator": "مولد Barcode"
 }
